@@ -186,7 +186,7 @@ El proyecto proporciona un pipeline completo para la recopilación, limpieza y a
 
 El EDA proporciona una base sólida para la toma de decisiones estratégicas, ayudando a identificar tendencias y áreas de mejora en la oferta de propiedades vacacionales. Los resultados pueden utilizarse para ajustar la estrategia de precios, identificar propiedades subrepresentadas o mejorar la experiencia del cliente.
 
-##Desafíos Encontrados
+## Desafíos Encontrados
 
 **Datos Faltantes**: Se manejaron adecuadamente los datos faltantes para evitar sesgos en el análisis.
 
