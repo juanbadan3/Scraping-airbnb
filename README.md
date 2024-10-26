@@ -1,9 +1,35 @@
 # Proceso de Scraping de Propiedades
 
+![web-scraping](https://github.com/user-attachments/assets/634cdd58-1a0c-44df-b05c-1b0455c39e29)
+
 Este documento detalla el proceso de scraping implementado para extraer datos de propiedades vacacionales de Airbnb en Barcelona.
 
+## Estructura del Proyecto
+- `scraping.py`: Código de scraping de propiedades.
+- `merge_data_final.csv`: Dataset final consolidado.
+- `airbnb_barcelona.csv`: Dataset original obtenido del scraping.
+- `ETL.ipynb`: Pipeline de ETL (extracción, transformación, carga).
+- `EDA.ipynb`: Análisis exploratorio de datos.
+- `requirements.txt`: Dependencias del proyecto.
 
-![web-scraping](https://github.com/user-attachments/assets/634cdd58-1a0c-44df-b05c-1b0455c39e29)
+## Configuración del entorno
+1. Crear un entorno virtual:
+   ```bash
+   python -m venv prueba_tecnica
+
+  Activar el entorno:
+    
+          
+    Windows: prueba_tecnica\Scripts\activate
+  
+          
+Instalar dependencias:
+
+
+    pip install -r requirements.txt
+
+
+
 
 ## Descripción del Script
 
@@ -90,7 +116,11 @@ El script navega a través de las propiedades y hace clic en cada una para extra
 ## Desafíos Encontrados
 - Manejo de ventanas emergentes.
   
-- Tiempo de carga de las páginas.
+- Tiempo de carga de las páginas.+
+
+- No todas las propiedades contaban con la informacion completa.
+
+- Solo habian dispobibles 68 propiedades en barcelona, no las 100 requeridad.
 
 # Proceso de Limpieza de Datos
 
@@ -99,22 +129,30 @@ Este documento describe el proceso de limpieza de los datasets obtenidos.
 
 ## Archivos
 
-- **clean_data.py**: Script para limpiar los datos extraídos y los datos de reservas.
-- **1728311703514csv**:Dataset entregado con propiedades de airbnb
-- **1728311703515.csv**:Dataset entregado con propiedades de booking
-- **properties_cleaned.csv**: Dataset limpio de propiedades.
+- `scraping.py`: Código de scraping de propiedades.
+- `merge_data_final.csv`: Dataset final consolidado.
+- `airbnb_barcelona.csv`: Dataset original obtenido del scraping.
+- `ETL.ipynb`: Pipeline de ETL (extracción, transformación, carga).
+- `EDA.ipynb`: Análisis exploratorio de datos.
+- `requirements.txt`: Dependencias del proyecto.
 
 
 ## Limpieza Realizada
 
 - Eliminación de caracteres innecesarios en la columna de precio.
 - Eliminación de filas con valores nulos.
+- Cambio del formato de las fechas.
+- Eliminar caracteres innecesarios.
+- Creacion de columnas auxiliares.
+- Visualizacion y correccion de inconsistencias.
+- Union de Dataframes
+- Creacion de una Base de Datos en Mysql
 
 ## Ejecución
 
 Ejecuta el script:
 
-      python clean_data.py  
+      ETL.ipynb 
 
 # Proceso ETL
 
@@ -122,8 +160,8 @@ Este documento detalla el proceso de ETL (Extracción, Transformación y Carga) 
 
 ## Archivos
 
-- **etl_process.py**: Script para realizar el proceso ETL.
-- **final_dataset.csv**: Dataset final consolidado.
+- **ETL.ipynb**: Script para realizar el proceso ETL.
+- **merged_data.csv**: Dataset consolidado.
 
 ## Proceso
 
@@ -134,7 +172,7 @@ Este documento detalla el proceso de ETL (Extracción, Transformación y Carga) 
 
 Ejecuta el script:
 
-    python etl_process.py
+    python ETL.ipynb
     
 # Análisis Exploratorio de Datos (EDA)
 
@@ -146,8 +184,8 @@ El objetivo de este EDA es obtener una comprensión profunda de los datos, ident
 
 ## Archivos
 
-- **eda_analysis.py**: Script que realiza el análisis exploratorio.
-- **final_dataset.csv**: Dataset consolidado utilizado para el análisis.
+- **EDA.ipynb**: Script que realiza el análisis exploratorio.
+- **merged_data_final.csv**: Dataset consolidado utilizado para el análisis.
 
 ## Herramientas Utilizadas
 
@@ -173,7 +211,7 @@ El análisis incluye, pero no se limita a:
 Para realizar el análisis, ejecuta el siguiente comando:
 
 
-    python eda_analysis.py
+    python EDA.ipynb
 
 Esto generará visualizaciones y estadísticas descriptivas que ayudarán a entender el comportamiento de los datos.
 
@@ -188,9 +226,18 @@ El EDA proporciona una base sólida para la toma de decisiones estratégicas, ay
 
 ## Desafíos Encontrados
 
+
+**Bloqueo por parte del sitio web durante el scraping**: El sitio web bloqueaba las solicitudes debido a demasiadas peticiones en un corto período de tiempo.
+
 **Datos Faltantes**: Se manejaron adecuadamente los datos faltantes para evitar sesgos en el análisis.
 
-**Interpretación de Resultados**: Se llevó a cabo un análisis cuidadoso para interpretar los resultados de manera correcta.
+**Datos duplicados en las propiedades**: El scraping y la fusión de datasets genero duplicados de algunas propiedades.
+
+**Fusión de datasets con diferentes esquemas**:Al intentar fusionar los datasets, se encontraron esquemas de las tablas no coinciden del todo
+
+**Gestión de fechas y formatos incorrectos**: Se encontraron problemas con formatos inconsistentes (fechas en formato DD-MM-YYYY vs YYYY/MM/DD).
+
+
 
 
 
