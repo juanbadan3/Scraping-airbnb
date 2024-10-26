@@ -165,8 +165,49 @@ Este documento detalla el proceso de ETL (Extracción, Transformación y Carga) 
 
 ## Proceso
 
-1. Carga de datasets limpios de propiedades y reservas.
-2. Fusión de los datasets en un solo archivo.
+1. Extracción
+   
+   El proceso de scraping se encargó de la extracción de los datos de propiedades vacacionales desde un sitio web (Airbnb). Utilizando la librería cSelenium inteactuando asi con la pagina web.
+
+   Los datos obtenidos incluían información clave de cada propiedad, como:
+
+   - Nombre
+   - Ubicación
+   - Precio
+   - Número de habitaciones
+   - Número de baños
+   - Número de huéspedes
+   - Puntuaciones
+  
+     Este proceso fue automatizado para recoger los datos de 100 propiedades, almacenándolos en un archivo CSV denominado airbnb_barcelona.csv.
+
+      Código principal para scraping:
+
+      El archivo scraping.py contiene el código que realiza el scraping, con comentarios detallados sobre las funciones y la estructura de la página web, así como instrucciones sobre cómo ejecutarlo.
+
+2. Transformación
+
+   Limpieza de datos:
+   
+      Se identificaron datos faltantes o incompletos (por ejemplo, propiedades con valores nulos en las columnas de precio o capacidad). Estos valores fueron tratados mediante imputación (media o mediana) o eliminando registros no válidos, dependiendo del impacto de los datos faltantes.   
+      También se eliminaron duplicados usando la función drop_duplicates() de Pandas, verificando los identificadores de propiedad (PropertyId) para evitar redundancias.
+      Se realizó la estandarización de tipos de datos, asegurando que:   
+      - Las fechas estuvieran en un formato datetime.   
+      - Los precios y tarifas como datos numéricos (float).
+      - Las categorías se mantuvieran como strings. 
+      
+   
+   Fusión de datasets:   
+      Se fusionaron dos datasets:
+      - Un dataset con propiedades proporcionado por la empresa, que incluía columnas como PropertyId, RealProperty, Capacity, etc.
+      - Un dataset de reservas, con información detallada de las mismas (fechas de llegada y salida, número de noches, tarifas, ingresos, etc.).
+        
+      La fusión se realizó usando pd.merge() de Pandas en la columna **on='PropertyId', how='left',** asegurando que las propiedades se alinearan correctamente.
+
+   Generación de nuevas variables:
+      Se creó una nueva columna llamada NetRevenue, calculada como la diferencia entre el ingreso total (Revenue) y las tarifas de limpieza (CleaningFee). Esto proporcionó una métrica adicional de utilidad para el análisis.
+   
+      Además, se calculó el Average Daily Rate (ADR), que refleja el precio promedio por noche (Revenue / NumNights), lo que es útil para analizar tendencias de precios.
 
 ## Ejecución
 
